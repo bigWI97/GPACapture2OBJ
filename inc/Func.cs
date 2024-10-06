@@ -54,11 +54,12 @@ namespace GPACapture2OBJ.inc
                 {
                     f @f = new f();
                     string[] sp1 = line.Split(' ');
-                    //sp1[0]是"f",sp1[1..3]是三项索引v/vt/vn
+                    //sp1[0]是"f",sp1[1..3]是v/vt/vn三项索引
                     for (int i = 0; i <= 2; i++)
                     {
                         string finfo = sp1[i + 1];
                         string[] sp2 = finfo.Split('/');
+                        //分开解析v/vt/vn
                         if (!string.IsNullOrEmpty(sp2[0])) { f.vIndex[i] = int.Parse(sp2[0]); }
                         if (!string.IsNullOrEmpty(sp2[1])) { f.vtIndex[i] = int.Parse(sp2[1]); }
                         if (!string.IsNullOrEmpty(sp2[2])) { f.vnIndex[i] = int.Parse(sp2[2]); }
