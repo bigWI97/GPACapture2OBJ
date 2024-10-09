@@ -16,6 +16,13 @@ namespace GPACapture2OBJ.inc
             Console.ResetColor();
         }
 
+        public static void LWarn(string str)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(str);
+            Console.ResetColor();
+        }
+
         public static void LInfo(string str)
         {
             Console.WriteLine(str);
