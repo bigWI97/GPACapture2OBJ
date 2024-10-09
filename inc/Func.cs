@@ -87,9 +87,15 @@ namespace GPACapture2OBJ.inc
             {
                 string[] sp = line.Split(',');
                 int index = int.Parse(sp[0]);
-                float f = float.Parse(sp[1]);
+
+                float f = 0;
+                if (!string.IsNullOrEmpty(sp[1])) //有遇到“52861,”这类没有数据的情况，做下判断
+                { f = float.Parse(sp[1]); }
+                else 
+                { Log.LWarn($"法线CSV有部分数据缺失，当前行内容 '{line}'"); }
+
                 //Log.LInfo($"line: {line},  index：{index}, f{loop3}: {f}");
-                if(vns.Count == index) { vns.Add(new vn()); }
+                if (vns.Count == index) { vns.Add(new vn()); }
                 vn @vn = vns[index];
                 if      (loop3 == 0) @vn.x = f;
                 else if (loop3 == 1) @vn.y = f;
@@ -139,10 +145,9 @@ namespace GPACapture2OBJ.inc
             List<vt> vts = GetVTsFromCSVFile(vtCsvPath);
             List<vn> vns = GetVNsFromCSVFile(vnCsvPath);
 
-            if (vs.Count == 0 || vts.Count == 0 || vns.Count == 0 || vs.Count != vts.Count || vts.Count != vns.Count) 
+            if (vs.Count == 0 || vts.Count == 0 || vns.Count == 0 || vs.Count != vts.Count || vts.Count != vns.Count)
             {
-                Log.LError($"顶点信息数量异常！vs.Count=={vs.Count}, vts.Count=={vts.Count}, vns.Count=={vns.Count}");
-                return false;
+                Log.LWarn($"顶点信息数量不一致，obj/csv可能存在冗余信息。vs.Count=={vs.Count}, vts.Count=={vts.Count}, vns.Count=={vns.Count}");
             }
 
             for (int i = 0; i < fs.Count; i++) 
